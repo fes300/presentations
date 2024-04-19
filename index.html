@@ -19,69 +19,117 @@
 			.small-text {
 				font-size: 30px;
 			}
+			.caption {
+				font-size: 20px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Problem statement</h1>
-					<span>we are about to turn on auto-deploy to prod when merging on master, but we want more confidence that we are not merging broken code.</span>
+					<h1>Auth in the wild</h1>
+					<div>
+						<img height="400" src="./assets/intro.jpeg">
+					</div>
 				</section>
 
 				<section>
-					<h3>Proposed solution</h3>
-					<div class="fragment fade-right">
-						<p style="display: inline; margin: 8px 0">
-							Smoke tests on every page that remder the page with mocked data and ensures there are no
+					<h3>What is auth?</h3>
+					<div>
+						<p style="display: inline;" class="fragment fade-right">
+							<strong>AUTH</strong>-entication
 						</p>
-						<p style="display: inline; color: red;">console.error</p>
+						<p style="display: inline;" class="fragment fade-right primary small-text">
+							→ WHO is the user?
+						</p>
 					</div>
 
-					<div style="margin: 18px 0">
-						<h2 style="display: inline;" class="fragment fade-right">
-							Why?
-						</h2>
+					<div>
+						<p style="display: inline;" class="fragment fade-right">
+							<strong>AUTH</strong>-orization
+						</p>
+						<p style="display: inline;" class="fragment fade-right primary small-text">
+							→ WHAT can the user do?
+						</p>
 					</div>
-
-					<ul>
-						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
-							they are fast, so they will not be a hassle to wait for before merging 
-						</li>
-						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
-							they are not flacky, so we will not be flooded by false positives like we are now
-						</li>
-						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
-							they only test our code (not the integration with backend/3rd party services), they serve a more specific purpose
-						</li>
-						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
-							they are easy to write
-						</li>
-					</ul>
-				</section>				
-
-				<section data-background-iframe="https://www.jitbit.com/screensharing/#1198130547970197737040000000596046">
 				</section>
 
 				<section>
-					<h1>What do we need to turn this into a standard?</h1>
+					<h3>What is the problem with Authorization?</h3>
+					<p style="display: inline;" class="fragment fade-right">
+						<strong>Authorization is not treated as a system,</strong>
+						it's often implicit, convoluted, sprikled throughout the codebase
+					</p>
+
+					<div style="display: flex; flex-direction: column; align-items: center; position: absolute; top:-20px; left:20px; background-color: white; border: 2px solid black; color: black;" class="fragment fade-right caption">
+						in our ACL layer ❤️
+						<img src="./assets/acl.png">
+					</div>
+
+					<div style="display: flex; flex-direction: column; align-items: center; position: absolute; top:20px; left:20px; background-color: white; border: 2px solid black; color: black;" class="fragment fade-right caption">
+						in our application layer...
+						<img src="./assets/app.png">
+					</div>
+
+					<div style="display: flex; flex-direction: column; align-items: center; position: absolute; top:60px; left:20px; background-color: white; border: 2px solid black; color: black;" class="fragment fade-right caption">
+						in our repositories!
+						<img src="./assets/db.png">
+					</div>
 				</section>
 
 				<section>
-					<ul>
-						<li style="margin: 8px 0">
-							every endpoint exposed by `react-sdk-api` should also expose a mock of the returned data
-						</li>
-						<li style="margin: 8px 0" class="fragment fade-right">
-							we should have a unique "mock all" function that set cache for all queries and is called before running the tests
-						</li>
-						<li style="margin: 8px 0" class="fragment fade-right">
-							we should write the tests (could probably even be done automatically through route generation)
-						</li>
-					</ul>
+					<h3>Ok big deal, what if I have auth spread all over? Maybe I like it this way</h3>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								audit
+							</li>
+						</ul>
+					</div>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								testability
+							</li>
+						</ul>
+					</div>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								multi-entity
+							</li>
+						</ul>
+					</div>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								custom roles
+							</li>
+						</ul>
+					</div>
 				</section>
 
-				 
+				<section>
+					<h3>How do you treat Authorization like a system?</h3>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								centalized (e.g. google zanzibar)
+							</li>
+						</ul>
+					</div>
+					<div  class="fragment fade-right">
+						<ul>
+							<li>
+								distributed (e.g. Oso, Biscuits, Ory Keto, etc..)
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section background-color="white" data-background-iframe="http://localhost:8001/">
+				</section>
 
 				<section>
 					<iframe src="https://giphy.com/embed/DAtJCG1t3im1G" width="480" height="346" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>

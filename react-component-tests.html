@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style type="text/css">
+			.primary {
+				color: #FF4100
+			}
+			.small-text {
+				font-size: 30px;
+			}
+			.caption {
+				font-size: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Problem statement</h1>
+					<span>we are about to turn on auto-deploy to prod when merging on master, but we want more confidence that we are not merging broken code.</span>
+				</section>
+
+				<section>
+					<h3>Proposed solution</h3>
+					<div class="fragment fade-right">
+						<p style="display: inline; margin: 8px 0">
+							Smoke tests on every page that remder the page with mocked data and ensures there are no
+						</p>
+						<p style="display: inline; color: red;">console.error</p>
+					</div>
+
+					<div style="margin: 18px 0">
+						<h2 style="display: inline;" class="fragment fade-right">
+							Why?
+						</h2>
+					</div>
+
+					<ul>
+						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
+							they are fast, so they will not be a hassle to wait for before merging 
+						</li>
+						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
+							they are not flacky, so we will not be flooded by false positives like we are now
+						</li>
+						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
+							they only test our code (not the integration with backend/3rd party services), they serve a more specific purpose
+						</li>
+						<li style="margin: 8px 0; font-size: 32px;" class="fragment fade-right">
+							they are easy to write
+						</li>
+					</ul>
+				</section>				
+
+				<section data-background-iframe="https://www.jitbit.com/screensharing/#1198130547970197737040000000596046">
+				</section>
+
+				<section>
+					<h1>What do we need to turn this into a standard?</h1>
+				</section>
+
+				<section>
+					<ul>
+						<li style="margin: 8px 0">
+							every endpoint exposed by `react-sdk-api` should also expose a mock of the returned data
+						</li>
+						<li style="margin: 8px 0" class="fragment fade-right">
+							we should have a unique "mock all" function that set cache for all queries and is called before running the tests
+						</li>
+						<li style="margin: 8px 0" class="fragment fade-right">
+							we should write the tests (could probably even be done automatically through route generation)
+						</li>
+					</ul>
+				</section>
+
+				 
+
+				<section>
+					<iframe src="https://giphy.com/embed/DAtJCG1t3im1G" width="480" height="346" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
